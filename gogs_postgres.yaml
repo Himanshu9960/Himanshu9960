@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: postgres
+  name: postgres
+spec:
+  containers:
+  - image: postgres
+    name: postgres
+    env:
+    - name: POSTGRES_DB
+      value: "gogs"
+    - name: POSTGRES_USER
+      value: "gogs"
+    - name: POSTGRES_PASSWORD
+      value: "gogs"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: gogs
+  name: gogs
+spec:
+  containers:
+  - image: gogs/gogs
+    name: gogs
+    env:
+    - name: GOGS_DB_HOST
+      value: "gogs"  # Update with your DB host
+    - name: GOGS_DB_USER
+      value: "gogs"  # Update with your DB user
+    - name: GOGS_DB_PASSWD
+      value: "gogs"  # Update with your DB password
+    - name: GOGS_DB_NAME
+      value: "gogs"  # Update with your DB name
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
